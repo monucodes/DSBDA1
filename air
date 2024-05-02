@@ -1,0 +1,88 @@
+import pandas as pd
+
+air = pd.read_csv('data.csv',encoding='cp1252')
+
+air.shape
+
+air.head(10)
+
+air['state'].value_counts()
+
+air.count()
+
+air.isnull().sum() 
+
+air.describe()
+
+air.info()
+
+air.columns
+
+air = air.drop(['stn_code', 'sampling_date', 'agency', 'location_monitoring_station'], axis = 1)
+
+types = {
+    "Residential" : "R",
+    "Residential, Rural and other Areas" : "RO",
+    "Residential and others" : "RO",
+    "Industrial Area" : "I",
+    "Industrial Areas" : "I",
+    "Industrial" : "I",
+    "nan" : "RRO",
+    "Sensitive Area" : "S",  
+    "Sensitive Areas" : "S",
+    "Sensitive" : "S"
+}
+
+air.type = air.type.replace(types)
+
+air.head(10)
+
+air['date'] = pd.to_datetime(air['date'],errors='coerce')
+air.head(5)
+
+air['year'] = air.date.dt.year
+air.head(5)
+
+
+#Error Correcting - Removing NAN values
+
+A = air.dropna()
+
+A.shape
+
+A = air.fillna(0)
+A.shape
+
+A.head()
+
+
+#we replaced Nan value by that columns mean value
+import numpy as np
+
+A = air['spm'].replace(np.NaN,air['spm'].mean())
+A.head(15)
+
+
+A = air['spm'].replace(np.NaN,air['spm'].median())
+A.head(15)
+
+
+# data transformation
+#converting categorical data to numerical data using label encoding
+#Label Encoder - means it will change the same name by number
+from sklearn.preprocessing import LabelEncoder
+
+
+labelencoder = LabelEncoder()
+
+
+air['state'] = labelencoder.fit_transform(air['state'])
+air.head(5)
+
+air['type'].value_counts()
+
+air['state'].value_counts()
+
+
+
+
