@@ -1,0 +1,31 @@
+pip install bs4
+
+pip install requests
+
+import bs4
+from bs4 import BeautifulSoup
+import requests
+
+url = "https://economictimes.indiatimes.com/markets/stocks/news"
+
+headers = {
+    'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36'
+}
+
+r = requests.get(url, {'headers':headers})
+
+soup = bs4.BeautifulSoup(r.text, 'html.parser')
+
+soup.find_all()
+
+soup.find_all('div')
+
+"""soup.find_all('div',{'class':'eachStory'})"""
+
+soup.find_all('div',{'class':'eachStory'})[0].find('span')
+
+for i in range (3):
+   print(f"\n{soup.find_all('div',{'class':'eachStory'})[i].find('p').text}")
+
+for i in range (2):
+ print(f"\n{soup.find_all('div',{'class':'eachStory'})[i].find('h3').text}")
