@@ -20,7 +20,7 @@ soup.find_all()
 
 soup.find_all('div')
 
-"""soup.find_all('div',{'class':'eachStory'})"""
+soup.find_all('div',{'class':'eachStory'})
 
 soup.find_all('div',{'class':'eachStory'})[0].find('span')
 
