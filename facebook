@@ -1,0 +1,25 @@
+import numpy as np
+import pandas as pd
+
+df = pd.read_csv("dataset_Facebook.csv", delimiter=";")
+df.head()
+
+df.describe()
+
+df.info()
+
+df1 = df[['Category','Post Hour','Paid']]
+
+df2 = df[['Paid','Lifetime Post Consumptions','Page total likes']]
+
+df1.shape
+
+df3 = df1.merge(df2)
+df3
+
+df3.sort_values(by=["like"], ascending=False)
+
+df2.sort_values(by='like', ascending=False)
+df2.head()
+
+df3.transpose()
