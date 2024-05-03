@@ -23,3 +23,6 @@ df2.sort_values(by='like', ascending=False)
 df2.head()
 
 df3.transpose()
+
+Pivot_table = pd.pivot_table(df,index=['type','category'], values = 'comment']
+print. (pivot_table)
