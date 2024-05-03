@@ -1,31 +1,91 @@
-pip install bs4
+import requests 
+import pandas as pd 
+from bs4 import BeautifulSoup 
+from IPython.display import FileLink
 
-pip install requests
+pip install google
 
-import bs4
-from bs4 import BeautifulSoup
-import requests
+HEADERS = {'User-Agent":
+"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, COOKIES = ()}
 
-url = "https://economictimes.indiatimes.com/markets/stocks/news"
+def get_data(url:str):
+    page requests.get(url, cookies COOKIES, headers HEADERS)
+    return page
 
-headers = {
-    'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36'
-}
+def asin_number(soup): 
+    data_asins= []
+    for item in soup.find_all("div", {"data-component-type": "s-search-result'
+        data_asins.append(item['data-asin'])
+    return data_asins
 
-r = requests.get(url, {'headers':headers})
+def fetch_href(soup):
+    links[]
+    for item in soup.findAll("a", ('data-hook":"see-all-reviews-link-foot"}):
+        links.append(item['href'])
+    return links[8]
 
-soup = bs4.BeautifulSoup(r.text, 'html.parser')
+def customer_review(soup):
+    data str
+    td_tag list soup.findAll(lambda tag: "data-hook" in tag.attrs and tag["
+    for item in td tag list: selected_item item.findAll("span", attrs=['class': 'a-size-base rev 
+    if selected_item: 
+    temp_text= selected_item[0].get_text()
+    if len(temp_text) > 0: 
+        data str data_str + temp_text
+    else:
+        data_str = data_str" \n"
+    else:
+    data_str = data_str +"\n" 
+result = data_str.split("\n")
+return (result)
 
-soup.find_all()
 
-soup.find_all('div')
+def customer rating (soup): 
+    data_out_lists = []
+    data_str = ""
+    td_tag_list = soup.findAll(lambda tag : "data-hook" in tag.attrs
+for item in td_tag_lists:
+    selected item = item.findALL("span",attrs={'class':'a-icons-alt'})
+    if selected_item:
+        data_str = selected_item[0].get_text().split("out")[0].strip("")
+        data_int = int(float(data_str))
+        data_out_lists.append(data_int)
+return data_out_lists
 
-soup.find_all('div',{'class':'eachStory'})
+def customer_review(soup):
+    reviews = []
+    review_section = soup.find_all('div', {'data-hook': 'review'})
+    for review in review_section:
+        customer_name = review.find('span', { 'class': 'a-profile-name'}).text review_text = review.find('span', {'data-hook': 'review-body'}).text.:
+        reviews.append(f"{customer_name}: {review_text}")
+    return reviews
 
-soup.find_all('div',{'class':'eachStory'})[0].find('span')
+def extract_r_and_r(data_asin):
+    all_reviews = []
+    rating_data = []
 
-for i in range (3):
-   print(f"\n{soup.find_all('div',{'class':'eachStory'})[i].find('p').text}")
+    url = f"https://www.amazon.in/dp/{data_asin}"
 
-for i in range (2):
- print(f"\n{soup.find_all('div',{'class':'eachStory'})[i].find('h3').text}")
+    response = get_data(url)
+    soup = BeautifulSoup (response.content, 'html.parser')
+    link = fetch_href(soup)
+    if link is None:
+        print(f"No reviews found for ASIN: {data_asin}")
+        return None
+
+
+i = 0
+print(f"Fetching reviews from the product: {data_asin}")
+while True:
+    i += 1
+    url = f"https://www.amazon.in{link}&pageNumber={i}" response = get_data(url)
+    soup = BeautifulSoup (response.text, 'html.parser')
+    review_data = customer_review(soup)
+    review_data = [review for review in review_data if len(review) > e]
+    temp_rating_data = customer_rating(soup)
+    rating_data.extend(temp_rating_data)
+    if len(review_data) == 0:
+        break
+    all_reviews += review_data
+
+min_count = min(len(all_reviews), len (rating_data))
