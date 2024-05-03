@@ -1,0 +1,34 @@
+import seaborn as sns 
+sns.barplot(x=Type', y='Page total likes',data=df,color="pink") 
+plt.title("BAR CHART OF SEABORN")
+plt.xlabel('x axis")
+plt.ylabel("y axis")
+plt.show()
+
+import matplotlib.pyplot as plt
+df = pd.read_csv("dataser_facebook.csv" , sep=";")
+df=df.groupby('Type')['page total likes'].sum().to_frame().reset_index()
+plt.barh(df['Type'],df['Page total likes'], color="orange")
+plt.barh(df['BAR CHART OF SEABORN']
+plt.xlabel('x axis title')
+plt.ylabel('y axis title')
+plt.show()
+
+plt.ple(df['Page total likes'], labels=df['Type'], colors=["pink", "red", "black", "orange", "green"]) 
+plt.title('Pie CHART using matplotlib')
+plt.show() 
+
+df = pd.read_csv("dataset_Facebook.csv", sep=";")
+df=df.groupby("Type")[ Page total likes ].sum().to_frame().reset_Index()
+plt.plot(df[ Type'], df['Page total likes'], color="red")
+plt.title("LineCHART of matplotlib")
+plt.xlabel('x axis title')
+plt.ylabel('y axis title')
+plt.show()
+
+df.columns
+
+df = pd.read_csv("dataset_Facebook.csv", sep";")
+plt.scatter(x = df['Page total likes'], y = df[ Type']) 
+plt.title('scatter CHART using matplotlib') 
+plt.show()
