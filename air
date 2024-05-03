@@ -1,4 +1,7 @@
 import pandas as pd
+import numpy as np
+import warnings
+warnings.filterwarnings('ignore')
 
 air = pd.read_csv('data.csv',encoding='cp1252')
 
@@ -70,6 +73,8 @@ A.head(15)
 # data transformation
 #converting categorical data to numerical data using label encoding
 #Label Encoder - means it will change the same name by number
+
+
 from sklearn.preprocessing import LabelEncoder
 
 
